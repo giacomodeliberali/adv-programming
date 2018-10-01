@@ -1,6 +1,15 @@
-# Disassembled bytecode
+# Exercise 2
+Check the differences between files `StrangeOne.java` and `StrangeTwo.java`. Compile them, disassemble the obtained classes using `javap -c` and inspect the byte-code of the method sum. Is the byte-code the same? Can you explain why?
 
-### Compiled from "StrangeOne.java"
+**Goal**: Using `javap` for disassembling Java code; inspecting simple bytecodes.
+
+**Expected output**: One short sentence answering the two questions.
+
+# Analysis
+
+## Disassembled bytecode
+
+Compiled from "StrangeOne.java"
 ```
 class StrangeOne {
   int b0;
@@ -29,7 +38,8 @@ class StrangeOne {
        9: ireturn
 }
 ```
-### Compiled from "StrangeTwo.java"
+
+Compiled from "StrangeTwo.java"
 ```
 class StrangeTwo {
   byte b0;
@@ -58,7 +68,7 @@ class StrangeTwo {
        9: ireturn
 }
 ```
-# Analysis
+
 The difference is the type of `b0` and `b1` vars. In the first class their type is `int` while in the second their type is `byte`. But since op-codes are bytes, there are at most 256 distinct ones, hence:
 - Impossible to have for each instruction one opcode per type
 - Careful selection of which types to support for each instruction

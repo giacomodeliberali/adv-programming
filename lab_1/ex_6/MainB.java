@@ -6,6 +6,5 @@ public class MainB {
     }
 }
 
-
-// Does not compiles, missing 
+// Does not compile, missing
 // cast to BSub at line 4
