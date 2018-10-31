@@ -1,1 +1,4 @@
 *.class
+/lab_2/Lab2/nbproject/private/
+/lab_2/Lab2/build/
+/lab_2/Lab2/dist/
