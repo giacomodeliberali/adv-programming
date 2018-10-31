@@ -82,15 +82,15 @@ public class MoistureSensor implements Serializable {
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
+                int readHumidity;
                 if (!decreasing) {
                     // read values must be increasing up to 100
-                    int readHumidity = Math.min(generator.nextInt(randomIncrementStep) + currentHumidity, 100);
-                    setCurrentHumidity(readHumidity);
+                    readHumidity = Math.min(generator.nextInt(randomIncrementStep) + currentHumidity, 100);
                 } else {
                     // read values must be decreasing down to 0
-                    int readHumidity = Math.max(Math.min(currentHumidity - generator.nextInt(randomIncrementStep), 100), 0);
-                    setCurrentHumidity(readHumidity);
+                    readHumidity = Math.max(Math.min(currentHumidity - generator.nextInt(randomIncrementStep), 100), 0);
                 }
+                setCurrentHumidity(readHumidity);
             }
         }, 0, 1000);
     }
