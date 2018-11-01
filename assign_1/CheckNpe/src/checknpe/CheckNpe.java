@@ -136,10 +136,13 @@ public class CheckNpe {
         return new CheckNpeResult(constructorsDescriptors, methodsDescriptors);
     }
 
+    /**
+     * Return the array of default object values to pass to the method/constructor invocation
+     * @param types The types of the parameters
+     * @param descriptor The descriptor to update the hasReferenceTypes property
+     * @return The array of default object values
+     */
     private Object[] getArgsDefaultValues(AnnotatedType[] types, Descriptor descriptor) {
-
-        int l = types.length;
-
         ArrayList<AnnotatedType> params = new ArrayList<>(Arrays.asList(types));
         Object[] instanceArgs = new Object[params.size()];
 
