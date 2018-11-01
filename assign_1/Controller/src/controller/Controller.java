@@ -14,16 +14,16 @@ public class Controller implements Serializable {
      * The channel of the property change listener for "on" property
      */
     public static final String ON_CHANNEL = "on";
-    
+
     /**
      * Indicates if the irrigation is turned on or of
      */
-    private boolean on;
-    
+    protected boolean on;
+
     /**
      * The current humidity
      */
-    private int locHumididy;
+    protected int locHumididy;
 
     /**
      * The property change support used to fire property changes and notify
@@ -35,22 +35,16 @@ public class Controller implements Serializable {
      * Creates a new controller
      */
     public Controller() {
-        checkIrrigation();
-    }
-
-    /**
-     * Check the humidity value and turns on/off the irrigation accordingly
-     */
-    private void checkIrrigation() {
         if (locHumididy >= 90) {
-            setOn(false);
+            on = false;
         } else if (locHumididy <= 30) {
-            setOn(true);
+            on = true;
         }
     }
 
     /**
      * The humidity
+     *
      * @return The humidity
      */
     public int getLocHumididy() {
@@ -59,17 +53,23 @@ public class Controller implements Serializable {
 
     /**
      * Sets the humidity
-     * @param locHumididy The humidity 
+     *
+     * @param locHumididy The humidity
      */
     public void setLocHumididy(int locHumididy) {
         if (locHumididy >= 0 && locHumididy <= 100) {
             this.locHumididy = locHumididy;
-            this.checkIrrigation();
+            if (locHumididy >= 90) {
+                setOn(false);
+            } else if (locHumididy <= 30) {
+                setOn(true);
+            }
         }
     }
 
     /**
      * Indicates if the irrigation is turned on
+     *
      * @return True if turned on, false otherwise
      */
     public boolean isOn() {
@@ -78,6 +78,7 @@ public class Controller implements Serializable {
 
     /**
      * Turns on/off the irrigation
+     *
      * @param value The irrigation
      */
     public void setOn(boolean value) {
@@ -87,6 +88,7 @@ public class Controller implements Serializable {
 
     /**
      * Add a new property change listener
+     *
      * @param propertyName The property to observe
      * @param listener The listener
      */
@@ -96,6 +98,7 @@ public class Controller implements Serializable {
 
     /**
      * Removes a property change listener
+     *
      * @param propertyName The observed property
      * @param listener The registered listener
      */

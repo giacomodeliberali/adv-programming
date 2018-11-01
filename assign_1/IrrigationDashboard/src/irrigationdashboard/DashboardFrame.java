@@ -2,6 +2,7 @@ package irrigationdashboard;
 
 import controller.Controller;
 import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import moisturesensor.MoistureSensor;
 
 /**
@@ -10,8 +11,8 @@ import moisturesensor.MoistureSensor;
  */
 public class DashboardFrame extends javax.swing.JFrame {
 
-    private Controller controller = new Controller();
-    private MoistureSensor sensor = new MoistureSensor();
+    protected Controller controller = new Controller();
+    protected MoistureSensor sensor = new MoistureSensor();
 
     /**
      * Creates new form Dash
@@ -20,11 +21,19 @@ public class DashboardFrame extends javax.swing.JFrame {
         initComponents();
         bindController();
     }
+    
+    public DashboardFrame(Controller controller) {
+        initComponents();
+        this.controller = controller;
+        bindController();
+    }
+    
 
     private void bindController() {
 
         humididyLabel.setText("" + sensor.getCurrentHumidity());
         decreasingLabel.setText(sensor.isDecreasing() ? "Yes" : "No");
+        activeLabel.setText(controller.isOn() ? "Yes" : "No");
 
         sensor.addPropertyChangeListener(MoistureSensor.CURRENT_HUMIDITY_CHANNEL, (PropertyChangeEvent evt) -> {
             int humididy = (int) evt.getNewValue();
@@ -39,6 +48,7 @@ public class DashboardFrame extends javax.swing.JFrame {
 
         controller.addPropertyChangeListener(Controller.ON_CHANNEL, (PropertyChangeEvent evt) -> {
             boolean isOn = (boolean) evt.getNewValue();
+            activeLabel.setText(isOn ? "Yes" : "No");
             sensor.setDecreasing(!isOn);
         });
 
@@ -58,6 +68,8 @@ public class DashboardFrame extends javax.swing.JFrame {
         startButton = new javax.swing.JButton();
         humididyLabel = new javax.swing.JLabel();
         decreasingLabel = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        activeLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -77,6 +89,10 @@ public class DashboardFrame extends javax.swing.JFrame {
 
         decreasingLabel.setText("None");
 
+        jLabel3.setText("Active:");
+
+        activeLabel.setText("None");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -87,9 +103,11 @@ public class DashboardFrame extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
-                    .addComponent(jLabel1))
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(activeLabel)
                     .addComponent(decreasingLabel)
                     .addComponent(humididyLabel))
                 .addContainerGap(101, Short.MAX_VALUE))
@@ -101,7 +119,11 @@ public class DashboardFrame extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(humididyLabel))
-                .addGap(28, 28, 28)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(activeLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(decreasingLabel))
@@ -162,10 +184,12 @@ public class DashboardFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel activeLabel;
     private javax.swing.JLabel decreasingLabel;
     private javax.swing.JLabel humididyLabel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JButton startButton;
     // End of variables declaration//GEN-END:variables
 }

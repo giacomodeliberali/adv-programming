@@ -31,9 +31,11 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="jLabel3" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="activeLabel" min="-2" max="-2" attributes="0"/>
                   <Component id="decreasingLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Component id="humididyLabel" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
@@ -49,7 +51,12 @@
                   <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="humididyLabel" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="activeLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="decreasingLabel" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -89,6 +96,16 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="decreasingLabel">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="None"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel3">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Active:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="activeLabel">
       <Properties>
         <Property name="text" type="java.lang.String" value="None"/>
       </Properties>
