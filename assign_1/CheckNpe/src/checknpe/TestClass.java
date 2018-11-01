@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package checknpe;
 
 /**
@@ -26,6 +21,14 @@ public class TestClass {
 
     public String npePositive(Object obj) {
         return obj.toString();
+    }
+
+    public int npeNegative(int obj) {
+        return obj;
+    }
+
+    public boolean npeNegative(boolean obj) {
+        return obj;
     }
 
     public String npeNegative(Object obj) {

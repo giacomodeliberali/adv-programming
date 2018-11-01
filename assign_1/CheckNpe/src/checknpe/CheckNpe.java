@@ -68,24 +68,21 @@ public class CheckNpe {
             try {
                 c.newInstance(instanceArgs);
             } catch (NullPointerException ex) {
-                if (descriptor.hasReferenceTypes) {
-                    descriptor.isNpeSensible = true;
+                if (descriptor.hasReferenceTypes()) {
+                    descriptor.setIsNpeSensible(true);
                 }
-            } catch (InstantiationException ex) {
-                descriptor.exception = "InstantiationException";
-            } catch (IllegalAccessException ex) {
-                descriptor.exception = "IllegalAccessException";
-            } catch (IllegalArgumentException ex) {
-                descriptor.exception = "IllegalArgumentException";
+                descriptor.setException(ex.getClass().getName());
             } catch (InvocationTargetException ex) {
                 if (ex.getTargetException() instanceof NullPointerException) {
-                    if (descriptor.hasReferenceTypes) {
-                        descriptor.isNpeSensible = true;
+                    if (descriptor.hasReferenceTypes()) {
+                        descriptor.setIsNpeSensible(true);
                     }
-                    descriptor.exception = "NullPointerException";
+                    descriptor.setException(ex.getTargetException().getClass().getName());
                 } else {
-                    descriptor.exception = "InvocationTargetException";
+                    descriptor.setException(ex.getClass().getName());
                 }
+            } catch (Exception ex) {
+                descriptor.setException(ex.getClass().getName());
             }
 
             System.out.println(descriptor.toString());
@@ -105,24 +102,21 @@ public class CheckNpe {
             try {
                 m.invoke(currentClass.newInstance(), instanceArgs);
             } catch (NullPointerException ex) {
-                if (descriptor.hasReferenceTypes) {
-                    descriptor.isNpeSensible = true;
+                if (descriptor.hasReferenceTypes()) {
+                    descriptor.setIsNpeSensible(true);
                 }
-            } catch (InstantiationException ex) {
-                descriptor.exception = "InstantiationException";
-            } catch (IllegalAccessException ex) {
-                descriptor.exception = "IllegalAccessException";
-            } catch (IllegalArgumentException ex) {
-                descriptor.exception = "IllegalArgumentException";
+                descriptor.setException(ex.getClass().getName());
             } catch (InvocationTargetException ex) {
                 if (ex.getTargetException() instanceof NullPointerException) {
-                    if (descriptor.hasReferenceTypes) {
-                        descriptor.isNpeSensible = true;
+                    if (descriptor.hasReferenceTypes()) {
+                        descriptor.setIsNpeSensible(true);
                     }
-                    descriptor.exception = "NullPointerException";
+                    descriptor.setException(ex.getTargetException().getClass().getName());
                 } else {
-                    descriptor.exception = "InvocationTargetException";
+                    descriptor.setException(ex.getClass().getName());
                 }
+            } catch (Exception ex) {
+                descriptor.setException(ex.getClass().getName());
             }
 
             System.out.println(descriptor.toString());
@@ -136,7 +130,9 @@ public class CheckNpe {
     }
 
     /**
-     * Return the array of default object values to pass to the method/constructor invocation
+     * Return the array of default object values to pass to the
+     * method/constructor invocation
+     *
      * @param types The types of the parameters
      * @param descriptor The descriptor to update the hasReferenceTypes property
      * @return The array of default object values
@@ -154,10 +150,10 @@ public class CheckNpe {
             } else if (type.equals(boolean.class)) {
                 instanceArgs[currentIndex] = false;
             } else {
-                descriptor.hasReferenceTypes = true;
+                descriptor.setHasReferenceTypes(true);
                 instanceArgs[currentIndex] = null;
             }
-            descriptor.parameters.add(type.getTypeName());
+            descriptor.addParameter(type.getTypeName());
             currentIndex++;
         }
 
@@ -171,7 +167,6 @@ public class CheckNpe {
         for (String className : args) {
             new CheckNpe(className).check();
         }
-
     }
 
 }
