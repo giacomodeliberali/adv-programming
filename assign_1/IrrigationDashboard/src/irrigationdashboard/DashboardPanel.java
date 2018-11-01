@@ -58,6 +58,8 @@ public class DashboardPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        controller1 = new controller.Controller();
+        moistureSensor1 = new moisturesensor.MoistureSensor();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         startButton = new javax.swing.JButton();
@@ -127,10 +129,12 @@ public class DashboardPanel extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private controller.Controller controller1;
     private javax.swing.JLabel decreasingLabel;
     private javax.swing.JLabel humididyLabel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private moisturesensor.MoistureSensor moistureSensor1;
     private javax.swing.JButton startButton;
     // End of variables declaration//GEN-END:variables
 }
