@@ -1,5 +1,7 @@
 # Assignment 1
 
+Giacomo De Liberali - 580595
+
 ## Github repository
 
 Github repo of solutions available [here](https://github.com/giacomodeliberali/adv-programming/tree/master/assign_1/release).
