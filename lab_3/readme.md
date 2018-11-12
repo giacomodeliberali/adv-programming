@@ -2,8 +2,6 @@
 
 Source [here](http://pages.di.unipi.it/corradini/Didattica/AP-18/ESER/03/exercises_3.html).
 
-<hr>
-
 ## Exercise 1
 Write a function myReplicate that given an integer n and a value v returns a list of length n initialized with v, namely all elements are equal to v.
 
@@ -11,8 +9,6 @@ Write a function myReplicate that given an integer n and a value v returns a lis
 
 **Expected output:** Two implementations of myReplicate: one recursive and one using the combinators map, filter, foldl/r from the Haskell Prelude.
 
-
-<hr>
 
 ## Exercise 2
 Write a function sumOdd that given a list of integers computes the sum of the values that are odd.
@@ -24,8 +20,6 @@ Write a function sumOdd that given a list of integers computes the sum of the va
 **Expected output:** Two implementations of sumOdd: one recursive and one using the combinators map, filter, foldl/r from the Haskell Prelude.
 
 
-<hr>
-
 ## Exercise 3
 Write a function repl that given a list xs and a integer n returns a list containing the elements of xs replicated n times.
 
@@ -35,8 +29,6 @@ Write a function repl that given a list xs and a integer n returns a list contai
 
 **Expected output:** Two implementations of repl: one recursive and one using the combinators map, filter, foldl/r from the Haskell Prelude.
 
-
-<hr>
 
 ## Exercise 4
 Write a function totalLength that given a list of strings xs computes the sum of the lengths of the strings starting with the character 'A'.
@@ -57,9 +49,6 @@ Write a function filterOdd that given a list xs returns a new list obtained from
 
 **Expected output:** Two implementations of filterOdd: one recursive and one using the combinators map, filter, foldl/r from the Haskell Prelude.
 
-
-<hr>
-
 ## Exercise 6
 Write a function titlecase that given a string s converts it to titlecase by uppercasing the first letter of every word.
 
@@ -69,8 +58,6 @@ Write a function titlecase that given a string s converts it to titlecase by upp
 
 **Expected output:** Two implementations of titlecase: one recursive and one using the combinators map, filter, foldl/r from the Haskell Prelude.
 
-
-<hr>
 
 ## Exercise 7
 Write a function countVowelPali that given a list of strings xs returns the total number of vowels in strings that are palindromes. For example,
@@ -83,8 +70,6 @@ countVowelPali ["anna", "banana", "civic", "mouse"] = 4
 **Expected output:** Two implementations of countVowelPali: one recursive and one using the combinators map, filter, foldl/r from the Haskell Prelude.
 
 
-<hr>
-
 ## Exercise 8
 Recall the higher-order combinator map from the Prelude. Implement it using the combinator foldl.
 
@@ -92,8 +77,6 @@ Recall the higher-order combinator map from the Prelude. Implement it using the 
 
 **Expected output:** A file containing the required implementation of the map combinator.
 
-
-<hr>
 
 ## Exercise 9
 Consider the following definition of binary trees:
@@ -106,8 +89,6 @@ Write a function sumSucc taking a tree t and computing the sum of the elements o
 **Goal: Experimenting with trees.**
 
 **Expected output:** A file containing the three required functions.
-
-<hr>
 
 ## Exercise 10
 Implement a tail recursive version of the map and filter combinators.
