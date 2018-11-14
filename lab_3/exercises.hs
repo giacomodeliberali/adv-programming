@@ -32,7 +32,7 @@ filterOddRec x = filterOddRecAux x 0
 
 -- . = function composition like f(g(x))
 -- zip [1,2,3] [8,7,6] => [(1,8),(2,7),(3,6)]
-filterOddRec1 x = map snd (filter (odd . fst) (zip [1 .. ] x))
+filterOdd x = map snd (filter (odd . fst) (zip [1 .. ] x))
 
 -- Exercise 6
 
@@ -84,20 +84,23 @@ trFilter f x = trFilterAux [] x f
 
 -- Exercise 10
 
-foldr (+) 0 [1..1000000]
+-- foldr (+) 0 [1..1000000]
+
 -- 1 + (foldr (+) 0 [2..1000000]) -->
 -- 1 + (2 + (foldr (+) 0 [3..1000000])) -->
 -- 1 + (2 + (3 + (foldr (+) 0 [4..1000000]))) -->
 -- 1 + (2 + (3 + (4 + (foldr (+) 0 [5..1000000])))) -->
 -- stack overflow
 
-foldl (+) 0 [1..1000000]
+-- foldl (+) 0 [1..1000000]
+
 -- (foldl (+) 0 [2..1000000]) + 1
 -- ((foldl (+) 0 [3..1000000]) + 2) + 1 -->
 -- (((foldl (+) 0 [4..1000000]) + 3) + 2) + 1 -->
 -- stack overflow
 
-foldl' (+) 0 [1..1000000]
+-- foldl' (+) 0 [1..1000000]
+
 -- foldl' (+) 0 [1..1000000] -->
 -- foldl' (+) 1 [2..1000000] -->
 -- foldl' (+) 3 [3..1000000] -->
