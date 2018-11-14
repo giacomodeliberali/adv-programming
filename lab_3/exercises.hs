@@ -55,3 +55,57 @@ countVowelPaliRec [] = 0
 countVowelPaliRec (x:xs) = if isPali x then (countVowels x + (countVowelPaliRec xs)) else countVowelPaliRec xs
 
 countVowelPali (x:xs) = foldl (+) 0 (map countVowels (filter isPali (x:xs)))
+
+-- Exercise 8
+map' f x = foldl (\acc x -> acc ++ [f x]) [] x
+
+-- Exercise 9
+data IntTree = Leaf Int | Node (Int, IntTree, IntTree) deriving (Show)
+
+tmap f (Leaf t) = Leaf(f t)
+tmap f (Node(r,left,right)) = Node(f r, tmap f left, tmap f right)
+
+l = Leaf(1)
+r = Leaf(2)
+root = Node(0,l,r)
+
+-- Exercise 10
+
+trMapAux acc [] f = reverse acc
+trMapAux acc (h:t) f = trMapAux (f h : acc) t f
+
+trMap f x = trMapAux [] x f
+    
+
+trFilterAux acc [] f = reverse acc
+trFilterAux acc (h:t) f = trFilterAux (if f h then h : acc else acc) t f
+
+trFilter f x = trFilterAux [] x f
+
+-- Exercise 10
+
+foldr (+) 0 [1..1000000]
+-- 1 + (foldr (+) 0 [2..1000000]) -->
+-- 1 + (2 + (foldr (+) 0 [3..1000000])) -->
+-- 1 + (2 + (3 + (foldr (+) 0 [4..1000000]))) -->
+-- 1 + (2 + (3 + (4 + (foldr (+) 0 [5..1000000])))) -->
+-- stack overflow
+
+foldl (+) 0 [1..1000000]
+-- (foldl (+) 0 [2..1000000]) + 1
+-- ((foldl (+) 0 [3..1000000]) + 2) + 1 -->
+-- (((foldl (+) 0 [4..1000000]) + 3) + 2) + 1 -->
+-- stack overflow
+
+foldl' (+) 0 [1..1000000]
+-- foldl' (+) 0 [1..1000000] -->
+-- foldl' (+) 1 [2..1000000] -->
+-- foldl' (+) 3 [3..1000000] -->
+-- foldl' (+) 6 [4..1000000] -->
+-- foldl' (+) 10 [5..1000000] -->
+-- ...
+-- ... You see that the stack doesn't overflow
+-- ...
+-- foldl' (+) 499999500000 [1000000] -->
+-- foldl' (+) 500000500000 [] -->
+-- 500000500000
