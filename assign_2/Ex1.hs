@@ -70,3 +70,15 @@ toList (LB ((x,i):xs)) = (replicate i x) ++ toList (LB xs)
 -- sumBag bag bag', returning the ListBag obtained by adding all the elements of bag' to bag
 sumBag :: Eq a => ListBag a -> ListBag a -> ListBag a
 sumBag (LB a) (LB b) = fromList ((toList (LB a)) ++ (toList (LB b)))
+
+
+--- Second part
+
+
+-- foldl (+) 0 (fromList [1,2,3])
+instance Foldable ListBag where
+  foldl f acc (LB lb) = foldl f acc (toList (LB lb))
+  foldr f acc (LB lb) = foldr f acc (toList (LB lb))
+                          
+--instance Functor ListBag where
+fmapLb f (LB lb) = fromList (map f (toList (LB lb))) -- how to infer Eq type fot ListBag??
