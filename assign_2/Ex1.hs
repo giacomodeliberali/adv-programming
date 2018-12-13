@@ -1,6 +1,3 @@
--- import Data.List -- sorBy
--- import Data.Function -- compare
-
 module Ex1 (
   ListBag(LB),
   wf,
@@ -13,17 +10,20 @@ module Ex1 (
   sumBag
 ) where
 
+-- import Data.List -- sorBy
+-- import Data.Function -- compare
+
 data ListBag a = LB [(a, Int)]
   deriving (Show, Eq)
 
 -- Well formated
-find :: Eq a => a -> ListBag a -> Bool
-find a (LB []) = False
-find a (LB ((x,i):xs)) = if x == a then True else find a (LB xs)
+findElem :: Eq a => a -> ListBag a -> Bool
+findElem a (LB []) = False
+findElem a (LB ((x,i):xs)) = if x == a then True else findElem a (LB xs)
 
 wf :: Eq a => ListBag a -> Bool
 wf (LB []) = True 
-wf (LB ((x,i):xs)) = if (find x (LB xs)) then False else wf (LB xs)
+wf (LB ((x,i):xs)) = if (findElem x (LB xs)) then False else wf (LB xs)
 -- wf (LB lb) = foldl (\isWf x -> False) True (sortBy (compare `on` fst) lb)
 
 -- empty, that returns an empty ListBag
@@ -35,12 +35,6 @@ singleton :: a -> ListBag a
 singleton v = LB [(v, 1)]
 
 -- fromList lst, returning a ListBag containing all and only the elements of lst, each with the right multiplicity
-{- insertAux :: Eq a => a -> ListBag a -> [(a, Int)] -> ListBag a
-insertAux j (LB []) r = LB (r ++ [(j,1)])
-insertAux j (LB ((x,i):xs)) r = if x == j then LB (r ++ [(x,i+1)] ++ xs) else insertAux j (LB xs) (r ++ [(x,i)])
-
-insert j (LB lb) = insertAux j (LB lb) [] -}
-
 myCountOcc item [] = 0
 myCountOcc item (x:xs) = if x == item then 1 + myCountOcc item xs else myCountOcc item xs
 
@@ -68,17 +62,30 @@ toList (LB []) = []
 toList (LB ((x,i):xs)) = (replicate i x) ++ toList (LB xs)
 
 -- sumBag bag bag', returning the ListBag obtained by adding all the elements of bag' to bag
+{- insertAux :: Eq a => a -> ListBag a -> [(a, Int)] -> ListBag a
+insertAux j (LB []) r = LB (r ++ [(j,1)])
+insertAux j (LB ((x,i):xs)) r = if x == j then LB (r ++ [(x,i+1)] ++ xs) else insertAux j (LB xs) (r ++ [(x,i)])
+insert j (LB lb) = insertAux j (LB lb) [] -}
+
+-- mySort :: Ord b => [(a, b)] -> [(a, b)]
+-- mySort = sortBy (compare `on` snd)
+
+-- TODO:
 sumBag :: Eq a => ListBag a -> ListBag a -> ListBag a
-sumBag (LB a) (LB b) = fromList ((toList (LB a)) ++ (toList (LB b)))
+sumBag (LB []) (LB []) = LB []
+sumBag (LB a) (LB []) = LB a
+sumBag (LB []) (LB b) = LB b
+sumBag (LB ((x,i):xs)) (LB ((y,j):ys)) = if x == y then LB [(x,i+j)] else LB []
 
 
 --- Second part
 
-
+-- TODO:
 -- foldl (+) 0 (fromList [1,2,3])
 instance Foldable ListBag where
   foldl f acc (LB lb) = foldl f acc (toList (LB lb))
   foldr f acc (LB lb) = foldr f acc (toList (LB lb))
-                          
+   
+-- TODO:
 --instance Functor ListBag where
 fmapLb f (LB lb) = fromList (map f (toList (LB lb))) -- how to infer Eq type fot ListBag??
