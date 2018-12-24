@@ -75,13 +75,9 @@ public class WinnerOperations {
      * @return A Stream<U> obtained by concatenating the results of the execution of all the jobs on the data contained in coll
      */
     public static <T, U> Stream<U> runJobs(Stream<Function<Stream<T>, Stream<U>>> jobs, Collection<T> coll) {
-        
-        // Since i close the stream, I need someone who provides a new one
-        StreamSupplier<T> streamSupplier = new StreamSupplier(coll.stream());
-        
         // Call all function in the stream with the coll stream and flat map the results
         // since each of that function returns another stream (Since I want Stream<String> and not Stream<Stream<String>>). 
-        Stream<U> flatMap = jobs.map(j -> j.apply(streamSupplier.get())).flatMap(Function.identity());
+        Stream<U> flatMap = jobs.map(j -> j.apply(coll.stream())).flatMap(Function.identity());
 
         return flatMap;
     }

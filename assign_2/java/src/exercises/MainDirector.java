@@ -24,8 +24,8 @@ public class MainDirector {
         Stream<Function<Stream<Winner>, Stream<String>>> functions = Stream.of(
                 WinnerOperations::extremeWinners
                 //,WinnerOperations::extremeWinners
-                //WinnerOperations::multiAwardedFilm,
-                //WinnerOperations::oldWinners
+                //,WinnerOperations::multiAwardedFilm
+                //,WinnerOperations::oldWinners
         );
 
         Stream<String> jobResults = WinnerOperations.runJobs(functions, winners);
