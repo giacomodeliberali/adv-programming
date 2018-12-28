@@ -5,6 +5,28 @@ from functools import reduce
 import logging
 logging.basicConfig(level=logging.INFO)
 
+def get_package_as_list(file_path):
+    # open the file in read mode
+    file = open(file_path, 'r')
+
+    # find the package directive with a regex
+    # https://regex101.com/r/lT0oAE/2
+    packages = re.findall(r"package\s[a-z.A-Z.0-9]*;", file.read())
+
+    # close the java file
+    file.close()
+
+    # if it has some package directive, analyse it
+    if packages:
+        # take package name. Eg from "package uno.due.tre;" take "uno.due.tre"
+        # assume the first taken by regex is the right one
+        package_name = packages[0][8:-1]
+
+        # split on the dot. Eg "uno.due.tre" = ["uno","due","tre"]
+        return package_name.split(".") 
+    else:
+        return []
+
 
 def rebuild_packages(root):
     """
@@ -36,31 +58,17 @@ def rebuild_packages(root):
 
                 logging.info(f'\t - cheking {filename}:')
 
-                # open the file in read mode
-                file = open(file_path, 'r')
-
-                logging.info(f'\t\t - location: {file_path}')
-
-                # find the package directive with a regex
-                # https://regex101.com/r/lT0oAE/2
-                packages = re.findall(r"package\s[a-z.A-Z.0-9]*;", file.read())
-
-                # close the java file
-                file.close()
+                # the package splitted on dots. Eg "package uno.due.tre;" = ["uno","due","tre"]
+                package = get_package_as_list(file_path)
 
                 # if it has some package directive, analyse it
-                if packages:
-                    # take package name. Eg from "package uno.due.tre;" take "uno.due.tre"
-                    # assume the first taken by regex is the right one
-                    package_name = packages[0][8:-1]
+                if len(package) > 0:
 
+                    package_name = '.'.join(package)
                     logging.info(f'\t\t - package name: {package_name}')
 
-                    # split on the dot. Eg "uno.due.tre" = ["uno","due","tre"]
-                    folders = package_name.split(".")                    
-
                     # if filename ends with /uno/due/tre/filename then continue
-                    package_subfolders = os.path.join(*folders, filename)
+                    package_subfolders = os.path.join(*package, filename)
 
                     if file_path.endswith(package_subfolders):
                         logging.info(f'\t\t => already in correct folder\n')
@@ -91,7 +99,7 @@ def rebuild_packages(root):
                         return folder
 
                     # Check is some package directory is missing and eventually create it
-                    current_package_folder = reduce(make_dir, folders, "")
+                    current_package_folder = reduce(make_dir, package, "")
 
                     # the target directory where to move the current file
                     target = os.path.join(root, current_package_folder)  
@@ -112,6 +120,3 @@ def rebuild_packages(root):
         logging.info(f'No java source files were found in folder')
     else:
         logging.info(f'Analysed {file_count} java files.\n')
-
-
-rebuild_packages("/Users/giacomodeliberali/code/unipi/adv-programming/assign_3")

@@ -25,6 +25,3 @@ def raj2jar(root):
                     print("error. ", end="")
                     print(e)
                     print("\n")
-
-
-raj2jar("/Users/giacomodeliberali/code/unipi/adv-programming/assign_3")

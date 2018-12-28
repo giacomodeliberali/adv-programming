@@ -33,5 +33,3 @@ def collect_sources(root, sources):
                     print("error. " + e)
 
     sources_file.close()
-
-collect_sources("/Users/giacomodeliberali/code/unipi/adv-programming", "sf.txt")
