@@ -1,5 +1,7 @@
-# !/usr/local/bin/python3
+#!/usr/bin/env python3
+
 import os
+import subprocess
 import requests
 import logging
 import csv
@@ -91,6 +93,17 @@ def download_tests(root, url="http://pages.di.unipi.it/corradini/Didattica/AP-18
                 # download the file and put into the target dir
                 urllib.request.urlretrieve(f'{url}/{tf}', tf_path)
             logging.info(f'\t\t\t => done')
+
+            # now files are ready to be tested
+
+            
+            command = command[1:-1]
+            logging.info(f'\t\t - running command: "{command}"')
+            #process = subprocess.Popen(command.split(), cwd=test_base_path)
+            #output, error = process.communicate()
+            os.system(f'cd {test_base_path} && {command}')
+            logging.info(f'\t\t - end command\n\n')
+
         else:
             logging.info(f'\t\t - not found')
         logging.info(f'')
