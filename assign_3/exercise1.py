@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 
 import os
-
+import logging
+logging.basicConfig(level=logging.INFO)
 
 def raj2jar(root):
     """
@@ -11,18 +12,21 @@ def raj2jar(root):
     by changing the extension to .jar.
     """
     if not os.path.isdir(root):
-        print("Root is not a valid directory")
+        logging.info("Root is not a valid directory")
         return
 
+    file_count = 0
     for root, dirs, files in os.walk(root):
         for name in files:
             if name.endswith(".raj"):
-                print("Renaming " + os.path.join(root, name) + " to jar... ", end='')
+                file_count += 1
+                logging.info("Renaming " + os.path.join(root, name) + " to jar... ", end='')
                 try:
                     filename_without_extension = name[0:-4]
                     os.rename(os.path.join(root, name), os.path.join(root, filename_without_extension + '.jar'))
-                    print("done.")
+                    logging.info("done.")
                 except Exception as e:
-                    print("error. ", end="")
-                    print(e)
-                    print("\n")
+                    logging.info("error. ", end="")
+                    logging.info(e)
+                    logging.info("\n")
+    logging.info(f'Renamed {file_count} raj files')
