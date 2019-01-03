@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 
 import os
-
+import logging
+logging.basicConfig(level=logging.INFO)
 
 def collect_sources(root, sources):
     """
@@ -12,25 +13,25 @@ def collect_sources(root, sources):
     """
 
     if not os.path.isdir(root):
-        print("Root is not a valid directory")
+        logging.info("Root is not a valid directory")
         return
 
     sources_file_path = os.path.join(root, sources)
     try:
         sources_file = open(sources_file_path, "w")
     except Exception as e:
-        print("Cannot open sources file. " + e)
+        logging.info(f'Cannot open sources file. Exception: {e}')
         return
 
     for root, dirs, files in os.walk(root):
         for name in files:
             if name.endswith(".java") or name.endswith(".hs") or name.endswith(".py"):
                 filename = os.path.join(root, name)
-                print("Add " + filename + " to sources", end='')
+                logging.info(f'Add {filename} to sources...')
                 try:
                     sources_file.write(filename + "\n")
-                    print("done.")
+                    logging.info(f'\t - done.')
                 except Exception as e:
-                    print("error. " + e)
+                    logging.info(f'\t - error: {e}')
 
     sources_file.close()

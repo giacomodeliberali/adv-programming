@@ -20,13 +20,13 @@ def raj2jar(root):
         for name in files:
             if name.endswith(".raj"):
                 file_count += 1
-                logging.info("Renaming " + os.path.join(root, name) + " to jar... ", end='')
+                logging.info("Renaming " + os.path.join(root, name) + " to jar... ")
                 try:
                     filename_without_extension = name[0:-4]
                     os.rename(os.path.join(root, name), os.path.join(root, filename_without_extension + '.jar'))
-                    logging.info("done.")
+                    logging.info(f'\t - done.')
                 except Exception as e:
-                    logging.info("error. ", end="")
+                    logging.info(f'\t - error.')
                     logging.info(e)
                     logging.info("\n")
     logging.info(f'Renamed {file_count} raj files')

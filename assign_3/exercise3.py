@@ -59,6 +59,8 @@ def rebuild_packages(root):
 
                 logging.info(f'\t - cheking {filename}:')
 
+                logging.info(f'\t\t - location: {file_path}')
+
                 # the package splitted on dots. Eg "package uno.due.tre;" = ["uno","due","tre"]
                 package = get_package_as_list(file_path)
 
@@ -111,7 +113,7 @@ def rebuild_packages(root):
                     target_file = os.path.join(target, filename)
                     os.rename(file_path, target_file)
 
-                    logging.info(f'\t\t => moved in: {target}')
+                    logging.info(f'\t\t => moved in: {target}\n')
 
                 else:
                     # missing package directive, do nothing
