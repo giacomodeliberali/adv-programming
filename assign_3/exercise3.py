@@ -5,6 +5,8 @@ import os
 import re
 from functools import reduce
 import logging
+from utils import green_log, red_log
+
 logging.basicConfig(level=logging.INFO)
 
 def get_package_as_list(file_path):
@@ -44,7 +46,7 @@ def rebuild_packages(root):
     logging.info(f'Analysing "{root}" for java files...\n')
 
     # the total number of java files analysed  
-    file_count = 0;        
+    file_count = 0
 
     # the list of files that have to be checked
     files_to_check = []
@@ -144,7 +146,7 @@ def rebuild_packages(root):
 
             if file["is_in_right_folder"]:
                 # do nothing  
-                _green_log("\t\t ✓ already in correct folder\n")
+                green_log("\t\t ✓ already in correct folder\n")
             else:
 
                 # create missing folder and move
@@ -158,33 +160,21 @@ def rebuild_packages(root):
                             os.mkdir(folder)
                             logging.info(f'\t\t\t\t - ok')
                         except Exception as e:
-                            _red_log(f'\t\t\t\t - error: {e}')
+                            red_log(f'\t\t\t\t - error: {e}')
                 
                 # try moving the file in the target dir
                 try:
                     logging.info(f'\t\t - moving in: {file["target_dir"]}')
                     os.rename(file["path"], file["target_dir"])
-                    _green_log(f'\t\t\t ✓ moved in: {file["target_dir"]}')
+                    green_log(f'\t\t\t ✓ moved in: {file["target_dir"]}')
                 except Exception as e:
-                    _red_log(f'\t\t\t - error: {e}\n')
+                    red_log(f'\t\t\t - error: {e}\n')
         else:
             # do nothing
-            _green_log(f'\t\t ✓ no package found\n')
+            green_log(f'\t\t ✓ no package found\n')
 
     # print some stats
     if file_count == 0:
         logging.info(f'No java source files were found in folder')
     else:
         logging.info(f'Analysed {file_count} java files.\n')
-
-def _green_log(str):
-    """
-        Log an info in the terminal with a green color
-    """
-    logging.info(f'\033[92m{str}\n\033[0m')
-    
-def _red_log(str):
-    """
-        Log an info in the terminal with a red color
-    """
-    logging.info(f'\033[91m{str}\n\033[0m')

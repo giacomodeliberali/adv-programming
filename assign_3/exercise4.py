@@ -7,6 +7,7 @@ import logging
 import csv
 import urllib
 from exercise3 import get_package_as_list
+from utils import green_log, set_log_color_blue, rm_log_color
 
 logging.basicConfig(level=logging.INFO)
 
@@ -65,7 +66,7 @@ def download_tests(root, url="http://pages.di.unipi.it/corradini/Didattica/AP-18
         if exists_in_folder:
             logging.info(f'\t\t - found in: {path}')
             if len(test_files) == 0:
-                logging.info(f'\t\t - no test files to download')
+                green_log(f'\t\t ✓ no test files to download')
                 logging.info(f'')
                 continue
 
@@ -98,16 +99,17 @@ def download_tests(root, url="http://pages.di.unipi.it/corradini/Didattica/AP-18
 
                 # download the file and put into the target dir
                 urllib.request.urlretrieve(f'{url}/{tf}', tf_path)
-            logging.info(f'\t\t\t => done')
+            green_log(f'\t\t\t ✓ done')
 
             # now files are ready to be tested
             
             command = command[1:-1] # remove quotes from command
             logging.info(f'\t\t - running command: "{command}"')
-            #os.system(f'cd {test_base_path} && {command}') # deprecated
-            subprocess.call(command, cwd=test_base_path, shell=True)
+            set_log_color_blue() # set the output color to blue
+            subprocess.call(command, cwd=test_base_path, shell=True) # call the command in the correct folder
+            rm_log_color() # remove the color from the log
             logging.info(f'\t\t - end command\n\n')
 
         else:
-            logging.info(f'\t\t - not found')
+            green_log(f'\t\t ✓ not found')
         logging.info(f'')
