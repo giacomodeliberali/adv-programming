@@ -41,6 +41,12 @@ def _exists_in_folder(folder, file):
     return False, None
 
 def download_tests(root, url="http://pages.di.unipi.it/corradini/Didattica/AP-18/PROG-ASS/03/Test"):
+    """
+        Takes as input a root folder and an option URL from where to donwload the CSV file.
+
+        Download and run tests defined in the CSV file over the suppported files (java, haskell and python)
+        found in the root folder.
+    """
 
     csv_url = f'{url}/AP_TestRegistry.csv'
     logging.info(f'Downloading CSV from {csv_url}')
@@ -65,7 +71,7 @@ def download_tests(root, url="http://pages.di.unipi.it/corradini/Didattica/AP-18
 
             # extract the path from the full file name
             # the default test path is the same as file
-            test_base_path = path[:-(len(filename)+1)]
+            test_base_path = path[:-(len(filename)+1)] # take from start till the last len(filename)+1 chars
 
             if filename.endswith('.java'):
                 # get the java file package as list
@@ -95,13 +101,11 @@ def download_tests(root, url="http://pages.di.unipi.it/corradini/Didattica/AP-18
             logging.info(f'\t\t\t => done')
 
             # now files are ready to be tested
-
             
-            command = command[1:-1]
+            command = command[1:-1] # remove quotes from command
             logging.info(f'\t\t - running command: "{command}"')
-            #process = subprocess.Popen(command.split(), cwd=test_base_path)
-            #output, error = process.communicate()
-            os.system(f'cd {test_base_path} && {command}')
+            #os.system(f'cd {test_base_path} && {command}') # deprecated
+            subprocess.call(command, cwd=test_base_path, shell=True)
             logging.info(f'\t\t - end command\n\n')
 
         else:
