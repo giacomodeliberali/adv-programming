@@ -11,10 +11,8 @@ returnLB x = singleton x
 bindLB :: Eq a1 => ListBag a2 -> (a2 -> ListBag a1) -> ListBag a1
 bindLB a f = foldr sumBag (LB []) (map f (toList a))
 
--- bindLB (fromList [1,2,2,3]) (\x -> singleton (x*2))
-
 -- Since every Monad should be also Functor, but we already saw in the previous exercise that
--- the fmap cannot be implemented due to a too strict bond in the Eq parameter in the ListBag, 
+-- the fmap cannot be implemented due to a too strict bound in the Eq type class in the ListBag, 
 -- we cannot implement the Monad class.
 -- To implement the Functor, and thus the Monad, we should first relax the equality constraint in the concrete type.
 

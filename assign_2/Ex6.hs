@@ -1,8 +1,8 @@
 import qualified Ex1
 import Test.HUnit
 
--- Abstract data type of a MultiSet, with the Eq constraints 
--- imposed by the concrete implementation ListBag
+-- Abstract data type of a MultiSet, with the Eq type class constraints 
+-- are imposed by the concrete implementation ListBag
 
 class MultiSet ms where
     empty :: ms a
@@ -30,7 +30,7 @@ instance MultiSet Ex1.ListBag where
 
 -- Another concrete implementation of a MultiSet
 
-data MultiSetList a = MSL [a] deriving (Show, Eq)
+data MultiSetList a = MSL [a] deriving (Show)
 
 -- ################
 

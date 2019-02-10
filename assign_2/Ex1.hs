@@ -92,6 +92,7 @@ instance Foldable ListBag where
                           
 
 --instance Functor ListBag where
+  --fmap :: (Eq a1, Eq a2) => (a2 -> a1) -> ListBag a2 -> ListBag a1 -- Wrong signature for Functor fmap
 fmap f (LB lb) = fromList (map f (toList (LB lb))) -- how to infer Eq type fot ListBag??
 
 -- We can not implement the Functor fmap since the fromList method
